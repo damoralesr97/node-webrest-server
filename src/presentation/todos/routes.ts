@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { TodosController } from "./controller";
-import { get } from "env-var";
 
 export class TodoRoutes {
   static get routes(): Router {
