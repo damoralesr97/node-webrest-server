@@ -3,6 +3,7 @@ import { TodoDatasource } from "../../domain/datasources/todo.datasource";
 import { CreateTodoDto } from "../../domain/dtos/todos/create-todo.dto";
 import { UpdateTodoDto } from "../../domain/dtos/todos/update-todo.dto";
 import { TodoEntity } from "../../domain/entities/todo.entity";
+import { CustomError } from "../../domain/errors/custom.error";
 
 export class TodoDatasourceImpl implements TodoDatasource {
   async create(createTodoDto: CreateTodoDto): Promise<TodoEntity> {
@@ -17,7 +18,7 @@ export class TodoDatasourceImpl implements TodoDatasource {
 
   async findById(id: number): Promise<TodoEntity> {
     const todo = await prisma.todo.findUnique({ where: { id } });
-    if (!todo) throw `Todo with id ${id} not found`;
+    if (!todo) throw new CustomError(`Todo with id ${id} not found`, 404);
     return TodoEntity.fromObject(todo);
   }
 
